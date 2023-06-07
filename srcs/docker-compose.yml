@@ -1,5 +1,7 @@
-version: 3
+version: '3'
+
 services:
+
   mariadb:
     container_name: mariadb
     networks:
@@ -7,12 +9,15 @@ services:
     build:
       context: requirements/mariadb
       dockerfile: Dockerfile
-      env_file: .env
-    volumes:
-      - mariadb: /var/lib/mysql
     restart: unless-stopped
-    expose:
-      - "3306"
+    environment:
+      - SQL_DATABASE=${SQL_DATABASE}
+      - SQL_USER=${SQL_USER}
+      - SQL_PASSWORD=${SQL_PASSWORD}
+      - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+
   nginx:
     container_name: nginx
     networks:
@@ -22,38 +27,47 @@ services:
     build:
       context: requirements/nginx
       dockerfile: Dockerfile
-      env_file: .env
     ports:
       - "443:443"
-    restart: on-failure
+    restart: always
+
   wordpress:
     container_name: wordpress
-    env_file: .env
-    volumes:
-      - wordpress: /var/www/wordpress
     networks:
       - inception
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile
     depends_on:
-        - mariadb
+      - mariadb
     restart: on-failure
-    expose:
-      - "9000"
-  volumes:
-    wordpress:
-      driver: local
-      driver_opts:
-        type: none
-        o: bind
-        device: /Users/aurelien/data/wordpress
-    mariadb:
-      driver: local
-      driver_opts:
-        type: none
-        o: bind
-        device: /Users/aurelien/data/mariadb
-  networks:
-    inception:
-      driver: bridge
+    environment:
+      - SQL_HOSTNAME=${SQL_HOSTNAME}
+      - SQL_DATABASE=${SQL_DATABASE}
+      - SQL_USER=${SQL_USER}
+      - SQL_PASSWORD=${SQL_PASSWORD}
+      - WP_TITLE=${WP_TITLE}
+      - WP_URL=${WP_URL}
+      - WP_ADMIN_USER=${WP_ADMIN_USER}
+      - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
+    ports:
+      - "9000:9000"
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/aurelien/data/mariadb
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/aurelien/data/wordpress
+
+networks:
+  backend:
+  inception:
+    name: inception
