@@ -9,27 +9,21 @@ services:
     build:
       context: requirements/mariadb
       dockerfile: Dockerfile
+      args:
+        - SQL_DATABASE=${SQL_DATABASE}
+        - SQL_USER=${SQL_USER}
+        - SQL_PASSWORD=${SQL_PASSWORD}
+        - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
     restart: unless-stopped
+    volumes:
+      - mariadb:/var/lib/mysql
     environment:
       - SQL_DATABASE=${SQL_DATABASE}
       - SQL_USER=${SQL_USER}
       - SQL_PASSWORD=${SQL_PASSWORD}
       - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
-    ports:
-      - "3306:3306"
-
-  nginx:
-    container_name: nginx
-    networks:
-      - inception
-    depends_on:
-      - wordpress
-    build:
-      context: requirements/nginx
-      dockerfile: Dockerfile
-    ports:
-      - "443:443"
-    restart: always
+    expose:
+      - "3306"
 
   wordpress:
     container_name: wordpress
@@ -38,6 +32,8 @@ services:
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile
+    volumes:
+      - wordpress:/var/www/
     depends_on:
       - mariadb
     restart: on-failure
@@ -50,8 +46,23 @@ services:
       - WP_URL=${WP_URL}
       - WP_ADMIN_USER=${WP_ADMIN_USER}
       - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
+    expose:
+      - "9000"
+
+  nginx:
+    container_name: nginx
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/
+    depends_on:
+      - wordpress
+    build:
+      context: requirements/nginx
+      dockerfile: Dockerfile
     ports:
-      - "9000:9000"
+      - "443:443"
+    restart: always
 
 volumes:
   mariadb:
@@ -68,6 +79,5 @@ volumes:
       device: /Users/aurelien/data/wordpress
 
 networks:
-  backend:
   inception:
-    name: inception
+    driver: bridge
