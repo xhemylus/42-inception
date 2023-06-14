@@ -1,6 +1,5 @@
-service mysql status
-env | grep SQL
-sudo service mysql start;
+service mariadb status
+sudo service mariadb start;
 
 mysql -e root -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
 mysql -e root -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
