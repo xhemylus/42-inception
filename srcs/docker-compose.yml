@@ -4,8 +4,6 @@ services:
 
   mariadb:
     container_name: mariadb
-    networks:
-      - inception
     build:
       context: requirements/mariadb
       dockerfile: Dockerfile
@@ -14,16 +12,17 @@ services:
         - SQL_USER=${SQL_USER}
         - SQL_PASSWORD=${SQL_PASSWORD}
         - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
-    restart: unless-stopped
+        - SQL_HOST=${SQL_HOST}
     volumes:
       - mariadb:/var/lib/mysql
     environment:
-      - SQL_DATABASE=${SQL_DATABASE}
-      - SQL_USER=${SQL_USER}
-      - SQL_PASSWORD=${SQL_PASSWORD}
-      - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
-    expose:
-      - "3306"
+        - SQL_DATABASE=${SQL_DATABASE}
+        - SQL_USER=${SQL_USER}
+        - SQL_PASSWORD=${SQL_PASSWORD}
+        - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+    restart: on-failure
+    networks:
+      - inception
 
   wordpress:
     container_name: wordpress
@@ -38,7 +37,7 @@ services:
       - mariadb
     restart: on-failure
     environment:
-      - SQL_HOSTNAME=${SQL_HOSTNAME}
+      - SQL_HOST=${SQL_HOST}
       - SQL_DATABASE=${SQL_DATABASE}
       - SQL_USER=${SQL_USER}
       - SQL_PASSWORD=${SQL_PASSWORD}

@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 RUN apt update -y;
 RUN apt upgrade -y;
@@ -10,7 +10,8 @@ RUN apt install -y wget;
 # RUN apt-get clean -y && apt-get autoremove -y
 
 RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y wget mariadb-client php7.3 php7.3-fpm php7.3-mysql php7.3-curl php7.3-json php7.3-mbstring php7.3-xml php7.3-zip php7.3-gd php7.3-soap php7.3-ssh2 php7.3-tokenizer php-mysql php7.3-common
+RUN apt-get install -y wget mariadb-client php7.4 php7.4-fpm
+RUN apt-get install -y php7.4-curl php7.4-dom php7.4-exif php7.4-fileinfo php7.4-imagick php7.4-mbstring php7.4-mysqli php7.4-xml php7.4-zip
 RUN apt-get clean -y && apt-get autoremove -y
 
 RUN wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www/html;
