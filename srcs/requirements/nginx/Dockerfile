@@ -1,5 +1,14 @@
 FROM debian:bullseye
 
+ARG SQL_HOST
+ARG SQL_DATABASE
+ARG SQL_USER
+ARG SQL_ROOT_PASSWORD
+ARG WP_TITLE
+ARG WP_URL
+ARG WP_ADMIN_USER
+ARG WP_ADMIN_PASSWORD
+
 RUN apt update;apt upgrade -y;apt install -y nginx
 
 RUN apt install curl -y
