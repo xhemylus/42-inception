@@ -11,7 +11,7 @@ RUN apt-get clean -y && apt-get autoremove -y
 
 COPY conf/php-fpm.conf /etc/php/7.3/fpm/
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/
-COPY tools/run.sh /tmp/
+COPY tools/wordpress.sh /tmp/
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar;
@@ -26,7 +26,7 @@ EXPOSE 9000
 
 RUN adduser -S www-data -G www-data -h /var/www/html
 
-#ENTRYPOINT [ "sh", "/tmp/run.sh" ]
+ENTRYPOINT [ "sh", "/tmp/wordpress.sh" ]
 
 WORKDIR /var/www/html/
 CMD ["/usr/sbin/php-fpm7.4", "-F", "-R"]
