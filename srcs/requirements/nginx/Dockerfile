@@ -3,7 +3,7 @@ FROM debian:bullseye
 RUN apt-get update -y;
 RUN apt-get upgrade -y;
 RUN apt-get install -y nginx openssl;
-RUN apt-get install clean -y;
+RUN apt-get clean -y;
 RUN apt-get autoremove -y;
 
 EXPOSE 443
