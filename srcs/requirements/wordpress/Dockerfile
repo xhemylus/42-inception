@@ -26,7 +26,7 @@ EXPOSE 9000
 
 RUN adduser -S www-data -G www-data -h /var/www/html
 
-ENTRYPOINT [ "sh", "/tmp/run.sh" ]
+#ENTRYPOINT [ "sh", "/tmp/run.sh" ]
 
 WORKDIR /var/www/html/
 CMD ["/usr/sbin/php-fpm7.4", "-F", "-R"]
