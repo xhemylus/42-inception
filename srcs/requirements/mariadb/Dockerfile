@@ -25,6 +25,4 @@ RUN chmod -R 777 /var/run/mysql
 
 RUN sh /tmp/start.sh
 
-EXPOSE 3306
-
 CMD ["mysqld_safe", "--console"]
