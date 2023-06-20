@@ -9,7 +9,7 @@ ARG SQL_PASSWORD
 
 RUN apt update -y;
 RUN apt upgrade -y;
-RUN apt install -y mariadb-server mariadb-client;
+RUN apt install -y mariadb-server;
 RUN apt install sudo -y;
 
 RUN mkdir -p /var/lib/mysql;
