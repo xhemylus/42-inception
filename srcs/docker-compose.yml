@@ -1,7 +1,27 @@
-version: '3'
+version: '1'
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+volumes:
+  mariadb:
+    driver: local
+    name: mariadb
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/abollen/data/mariadb
+  wordpress:
+    driver: local
+    name: wordpress
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/abollen/data/wordpress
 
 services:
-
   mariadb:
     container_name: mariadb
     networks:
@@ -40,7 +60,6 @@ services:
       - wordpress:/var/www/
     depends_on:
       - mariadb
-    restart: unless-stopped
     environment:
       - SQL_HOST=${SQL_HOST}
       - SQL_DATABASE=${SQL_DATABASE}
@@ -50,8 +69,7 @@ services:
       - WP_URL=${WP_URL}
       - WP_ADMIN_USER=${WP_ADMIN_USER}
       - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
-    expose:
-      - "9000"
+    restart: unless-stopped
 
   nginx:
     container_name: nginx
@@ -68,21 +86,3 @@ services:
       - "443:443"
     restart: unless-stopped
 
-volumes:
-  mariadb:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/abollen/data/mariadb
-  wordpress:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/abollen/data/wordpress
-
-networks:
-  inception:
-    name: inception
-    driver: bridge

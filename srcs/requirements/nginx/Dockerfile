@@ -1,31 +1,18 @@
 FROM debian:bullseye
 
-ARG SQL_HOST
-ARG SQL_DATABASE
-ARG SQL_USER
-ARG SQL_ROOT_PASSWORD
-ARG WP_TITLE
-ARG WP_URL
-ARG WP_ADMIN_USER
-ARG WP_ADMIN_PASSWORD
-
-RUN apt update;apt upgrade -y;apt install -y nginx
-
-RUN apt install curl -y
-RUN apt install sudo -y
-
-RUN apt install openssl -y;
-RUN mkdir -p /etc/nginx/ssl;
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/abollen.crt -keyout /etc/nginx/ssl/abollen.key -subj "/C=FR/ST=Paris/L=Paris/O=42/OU=42/CN=abollen.42.fr/UID=login"
-
-RUN mkdir -p /var/run/nginx
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
-
-RUN mkdir /var/www/html/test
-
-RUN chmod 755 /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+RUN apt-get update -y;
+RUN apt-get upgrade -y;
+RUN apt-get install -y nginx openssl;
+RUN apt-get install clean -y;
+RUN apt-get autoremove -y;
 
 EXPOSE 443
+
+RUN mkdir -p /run/nginx
+COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
+						-keyout /etc/ssl/private/nginx.key \
+						-out /etc/ssl/certs/nginx.crt \
+						-subj "/C=FR/ST=Lyon/L=Lyon/O=42Lyon/OU=abollen/CN=abollen"
 
 CMD ["nginx", "-g", "daemon off;"]
