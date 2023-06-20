@@ -5,4 +5,4 @@ wp theme install --allow-root --activate --path=/var/www/html/wordpress zeever
 
 chown -R www-data: /var/www/*
 chmod -R 755 /var/www/html
-
+exec "$@"
