@@ -19,6 +19,7 @@ RUN mv wp-cli.phar /usr/local/bin/wp;
 WORKDIR /var/www/html/wordpress
 
 RUN mkdir /var/run/php/
+RUN mkdir -p /run/php
 
 COPY tools/run.sh /tmp/
 
