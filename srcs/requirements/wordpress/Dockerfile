@@ -11,7 +11,7 @@ RUN apt-get clean -y && apt-get autoremove -y
 
 COPY conf/php-fpm.conf /etc/php/7.4/fpm/
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/
-COPY tools/wordpress.sh /tmp/
+COPY tools/run.sh /tmp/
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar;
