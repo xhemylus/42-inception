@@ -13,6 +13,8 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 	wp theme install --allow-root --activate blocksy
 	chown -R www-data: /var/www/*
 	chmod -R 755 /var/www/html
+	env
+	sleep 10
 else
 	echo "Wordpress is already installed"
 fi
