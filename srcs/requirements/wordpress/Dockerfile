@@ -9,8 +9,8 @@ RUN apt-get install -y wget mariadb-client php7.4 php7.4-fpm
 RUN apt-get install -y php7.4-curl php7.4-dom php7.4-exif php7.4-fileinfo php7.4-imagick php7.4-mbstring php7.4-mysqli php7.4-xml php7.4-zip
 RUN apt-get clean -y && apt-get autoremove -y
 
-COPY conf/php-fpm.conf /etc/php/7.3/fpm/
-COPY conf/www.conf /etc/php/7.3/fpm/pool.d/
+COPY conf/php-fpm.conf /etc/php/7.4/fpm/
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/
 COPY tools/wordpress.sh /tmp/
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
