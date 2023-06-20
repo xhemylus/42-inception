@@ -27,4 +27,4 @@ RUN sh /tmp/start.sh
 
 EXPOSE 3306
 
-CMD ["mysqld", "--console"]
+CMD ["mysqld_safe", "--console"]
