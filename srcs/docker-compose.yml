@@ -51,6 +51,17 @@ services:
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile
+      args:
+      - SQL_HOST=${SQL_HOST}
+      - SQL_DATABASE=${SQL_DATABASE}
+      - SQL_USER=${SQL_USER}
+      - SQL_PASSWORD=${SQL_PASSWORD}
+      - WP_TITLE=${WP_TITLE}
+      - WP_URL=${WP_URL}
+      - WP_ADMIN_USER=${WP_ADMIN_USER}
+      - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
+      - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+      - WP_PATH=${WP_PATH}
     volumes:
       - wordpress:/var/www/
     depends_on:
