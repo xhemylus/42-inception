@@ -51,11 +51,6 @@ services:
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile
-      args:
-        - WP_TITLE=${WP_TITLE}
-        - WP_URL=${WP_URL}
-        - WP_ADMIN_USER=${WP_ADMIN_USER}
-        - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
     volumes:
       - wordpress:/var/www/
     depends_on:
@@ -69,6 +64,9 @@ services:
       - WP_URL=${WP_URL}
       - WP_ADMIN_USER=${WP_ADMIN_USER}
       - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
+      - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+      - WP_PATH=${WP_PATH}
+
     restart: unless-stopped
 
   nginx:
