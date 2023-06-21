@@ -22,7 +22,6 @@ WORKDIR /var/www/html/wordpress
 RUN mkdir /var/run/php/
 RUN mkdir -p /run/php
 
-EXPOSE 9000
 
 RUN adduser -S www-data -G www-data -h /var/www/html
 
