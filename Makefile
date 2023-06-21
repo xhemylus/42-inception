@@ -7,7 +7,7 @@ WORKDIR = /home/abollen/data
 
 #***** RULES *****#
 
-all : 
+all : init
 	docker compose --env-file=srcs/.env --file=srcs/docker-compose.yml up -d
 
 init :
