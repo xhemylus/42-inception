@@ -16,9 +16,9 @@ init :
 	mkdir ${WORKDIR}/mariadb && @echo "\033[36m[${PROJECT}]\033[93m[INIT] \033[0m${WORKDIR}/mariadb folder"
 	@test ! `grep -q ${HOST} /etc/hosts` && echo ${HOST} >> /etc/hosts && echo "\033[36m[${PROJECT}]\033[93m[INIT] \033[0mhost" || true
 
-clean :
+stop :
 	docker compose --env-file=srcs/.env --file=srcs/docker-compose.yml down 
 
-re: clean all
+re: stop all
 
-.PHONY : all clean fclean re
+.PHONY : all stop re
