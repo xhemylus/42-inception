@@ -18,8 +18,7 @@ init :
 
 clean :
 	docker compose --env-file=srcs/.env --file=srcs/docker-compose.yml down 
-	@echo "\033[36m[${PROJECT}]\033[93m[CLEAN] \033[0m${OBJ_DIR} folder"
 
-re: fclean all
+re: clean all
 
 .PHONY : all clean fclean re
