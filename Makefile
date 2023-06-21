@@ -11,9 +11,9 @@ all : init
 	docker compose --env-file=srcs/.env --file=srcs/docker-compose.yml up -d
 
 init :
-	mkdir ${WORKDIR} && @echo "\033[36m[${PROJECT}]\033[93m[INIT] \033[0m${WORKDIR} folder"
-	mkdir ${WORKDIR}/wordpress && @echo "\033[36m[${PROJECT}]\033[93m[INIT] \033[0m${WORKDIR}/wordpress folder"
-	mkdir ${WORKDIR}/mariadb && @echo "\033[36m[${PROJECT}]\033[93m[INIT] \033[0m${WORKDIR}/mariadb folder"
+	@test ! -d ${DATADIR} && mkdir ${DATADIR} && echo "\033[36m[${PROJECT}]\033[93m[CREATE] \033[0m${DATADIR}" || true
+	@test ! -d ${DATADIR}/wordpress && mkdir ${DATADIR}/wordpress && echo "\033[36m[${PROJECT}]\033[93m[CREATE] \033[0m${DATADIR}/wordpress" || true
+	@test ! -d ${DATADIR}/mariadb && mkdir ${DATADIR}/mariadb && echo "\033[36m[${PROJECT}]\033[93m[CREATE] \033[0m${DATADIR}/mariadb" || true
 	@test ! `grep -q ${HOST} /etc/hosts` && echo ${HOST} >> /etc/hosts && echo "\033[36m[${PROJECT}]\033[93m[INIT] \033[0mhost" || true
 
 stop :
