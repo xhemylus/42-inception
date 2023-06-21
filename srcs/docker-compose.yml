@@ -77,6 +77,7 @@ services:
       - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
       - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
       - WP_PATH=${WP_PATH}
+      - WP_VERSION=${WP_VERSION}
 
     restart: unless-stopped
 
